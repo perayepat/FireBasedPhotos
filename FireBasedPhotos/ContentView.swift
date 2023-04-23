@@ -21,11 +21,13 @@ struct ContentView: View {
             uploadImageView
             
             Divider()
-            HStack {
-                ForEach(retrievedImages,id: \.self) { image in
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: 200, height: 200)
+            ScrollView(.horizontal,showsIndicators: false) {
+                HStack{
+                    ForEach(retrievedImages,id: \.self) { image in
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 200, height: 200)
+                    }
                 }
             }
         }
@@ -113,6 +115,8 @@ extension ContentView{
     
     func retrievePhotos(){
         // Get the data from the database
+        retrievedImages = []
+
         let db = Firestore.firestore()
         db.collection("images").getDocuments { snapshot, error in
             guard error == nil else { return}
