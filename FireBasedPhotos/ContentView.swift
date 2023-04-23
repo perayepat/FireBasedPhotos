@@ -6,6 +6,7 @@ import FirebaseFirestore
 struct ContentView: View {
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
+    @State var retrievedImages = [UIImage]()
     
     var body: some View {
         VStack {
@@ -18,11 +19,25 @@ struct ContentView: View {
             }
             .buttonStyle(.bordered)
             uploadImageView
+            
+            Divider()
+            HStack {
+                ForEach(retrievedImages,id: \.self) { image in
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                }
+            }
         }
         .sheet(isPresented: $isPickerShowing){
             ImagePicker(selectedImage: $selectedImage,isPickerShowing: $isPickerShowing)
         }
         .padding()
+        .onAppear{
+            retrievePhotos()
+        }
+        
+     
     }
     
     var selectedImageView: some View{
@@ -48,6 +63,7 @@ struct ContentView: View {
             if selectedImage != nil{
                 Button {
                     uploadPhoto()
+                    
                 } label: {
                     Text("Upload photo")
                 }
@@ -72,10 +88,10 @@ extension ContentView{
         let storageRef = storage.reference()
         
         // Turn image into data
-        let imageData = safeImage.pngData()
+        let imageData = safeImage.jpegData(compressionQuality: 0.6)
         guard let safeImageData = imageData else {return}
         
-        let path = "images/\(UUID().uuidString).png"
+        let path = "images/\(UUID().uuidString).jpg"
         //file path and name
         let imageRef = storageRef.child(path)
         
@@ -85,8 +101,47 @@ extension ContentView{
             }
             
             let db = Firestore.firestore()
-            db.collection("images").document("uploededImages")
-                .setData(["url":path])
+            db.collection("images").document()
+                .setData(["url":path]) { error in
+                    guard error == nil else { return}
+                    DispatchQueue.main.async {
+                        retrievePhotos()
+                    }
+                }
         }
+    }
+    
+    func retrievePhotos(){
+        // Get the data from the database
+        let db = Firestore.firestore()
+        db.collection("images").getDocuments { snapshot, error in
+            guard error == nil else { return}
+            guard let safeSnapshot = snapshot else {return}
+            var paths = [String]()
+            
+            for document in safeSnapshot.documents {
+                // get the file path
+                paths.append(document["url"] as! String)
+            }
+            
+            for path in paths {
+                let storageRef = Storage.storage().reference()
+                let fileRef = storageRef.child(path)
+                fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    guard error == nil else { return}
+                    guard let safeData = data else {return}
+                    
+                    if let image = UIImage(data: safeData){
+                        DispatchQueue.main.async {
+                            retrievedImages.append(image)
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Get the image data in storage
+        
+        //Display images
     }
 }
