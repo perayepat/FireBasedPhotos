@@ -11,6 +11,7 @@
 		43A03F6929F546E6002A023A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A03F6829F546E6002A023A /* ContentView.swift */; };
 		43A03F6B29F546E9002A023A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43A03F6A29F546E9002A023A /* Assets.xcassets */; };
 		43A03F6E29F546E9002A023A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43A03F6D29F546E9002A023A /* Preview Assets.xcassets */; };
+		43A03F7529F54B5B002A023A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A03F7429F54B5B002A023A /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		43A03F6829F546E6002A023A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		43A03F6A29F546E9002A023A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43A03F6D29F546E9002A023A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		43A03F7429F54B5B002A023A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				43A03F6629F546E6002A023A /* FireBasedPhotosApp.swift */,
 				43A03F6829F546E6002A023A /* ContentView.swift */,
+				43A03F7429F54B5B002A023A /* ImagePicker.swift */,
 				43A03F6A29F546E9002A023A /* Assets.xcassets */,
 				43A03F6C29F546E9002A023A /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43A03F7529F54B5B002A023A /* ImagePicker.swift in Sources */,
 				43A03F6929F546E6002A023A /* ContentView.swift in Sources */,
 				43A03F6729F546E6002A023A /* FireBasedPhotosApp.swift in Sources */,
 			);
