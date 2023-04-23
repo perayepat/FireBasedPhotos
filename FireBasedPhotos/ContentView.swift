@@ -17,7 +17,7 @@ struct ContentView: View {
             .buttonStyle(.bordered)
         }
         .sheet(isPresented: $isPickerShowing){
-            ImagePicker()
+            ImagePicker(selectedImage: $selectedImage,isPickerShowing: $isPickerShowing)
         }
         .padding()
     }
@@ -28,6 +28,7 @@ struct ContentView: View {
                 Image(uiImage: selectedImage!)
                     .resizable()
                     .frame(width: 200, height: 200)
+                    .cornerRadius(10)
             } else{
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: 200, height: 200)
